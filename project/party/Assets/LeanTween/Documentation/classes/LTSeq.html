@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>LeanAudioOptions</title>
+    <title>LTSeq</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.8.0pr2/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -127,12 +127,12 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>LeanAudioOptions Class</h1>
+                        <h1>LTSeq Class</h1>
                         <div class="box meta">
                         
                         
                                 <div class="foundat">
-                                    Defined in: <a href="../files/LeanAudio.cs.html#l316"><code>LeanAudio.cs:316</code></a>
+                                    Defined in: <a href="../files/LTSeq.cs.html#l5"><code>LTSeq.cs:5</code></a>
                                 </div>
                         
                         
@@ -140,14 +140,26 @@
                         
                         
                         <div class="box intro">
-                            <p>Pass in options to LeanAudio</p>
+                            <p>Internal Representation of a Sequence<br>
+                        <br>
+                          <h4>Example:</h4>
+                        var seq = LeanTween.sequence();<br>
+                        seq.append(1f); <span style="color:gray">// delay everything one second</span><br>
+                        seq.append( () =&gt; { <span style="color:gray">// fire an event before start</span><br>
+                         Debug.Log(&quot;I have started&quot;);<br>
+                        });<br>
+                        seq.append( LeanTween.move(cube1, Vector3.one * 10f, 1f) ); <span style="color:gray">// do a tween</span><br>
+                        seq.append( (object obj) =&gt; { <span style="color:gray">// fire event after tween</span><br>
+                         var dict = obj as Dictionary&lt;string,string&gt;;<br>
+                         Debug.Log(&quot;We are done now obj value:&quot;+dict[&quot;hi&quot;]);<br>
+                        }, new Dictionary&lt;string,string&gt;(){ {&quot;hi&quot;,&quot;sup&quot;} } );<br></p>
                         
                         </div>
                         
                             <div class="constructor">
                                 <h2>Constructor</h2>
-                                <div id="method_LeanAudioOptions" class="method item">
-                                    <h3 class="name"><code>LeanAudioOptions</code></h3>
+                                <div id="method_LTSeq" class="method item">
+                                    <h3 class="name"><code>LTSeq</code></h3>
                                 
                                         <span class="paren">()</span>
                                 
@@ -161,7 +173,7 @@
                                     <div class="meta">
                                                 <p>
                                                 Defined in
-                                        <a href="../files/LeanAudio.cs.html#l316"><code>LeanAudio.cs:316</code></a>
+                                        <a href="../files/LTSeq.cs.html#l5"><code>LTSeq.cs:5</code></a>
                                         </p>
                                 
                                 
@@ -193,11 +205,19 @@
                         
                                             <ul class="index-list methods">
                                                     <li class="index-item method">
-                                                        <a href="#method_setFrequency">setFrequency</a>
+                                                        <a href="#method_add (method(object))">add (method(object))</a>
                         
                                                     </li>
                                                     <li class="index-item method">
-                                                        <a href="#method_setVibrato">setVibrato</a>
+                                                        <a href="#method_add (tween)">add (tween)</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#method_append (delay)">append (delay)</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#method_append (method)">append (method)</a>
                         
                                                     </li>
                                             </ul>
@@ -210,19 +230,19 @@
                                     <div id="methods" class="api-class-tabpanel">
                                         <h2 class="off-left">Methods</h2>
                         
-                                            <div id="method_setFrequency" class="method item">
-                                                <h3 class="name"><code>setFrequency</code></h3>
+                                            <div id="method_add (method(object))" class="method item">
+                                                <h3 class="name"><code>add (method(object))</code></h3>
                                             
                                                     <div class="args">
                                                         <span class="paren">(</span><ul class="args-list inline commas">
                                                             <li class="arg">
-                                                                    <code>frequencyRate:int</code>
+                                                                    <code>callback:System.Action</code>
                                                             </li>
                                                         </ul><span class="paren">)</span>
                                                     </div>
                                             
                                                     <span class="returns-inline">
-                                                        <span class="type"><a href="../classes/LeanAudioOptions.html" class="crosslink">LeanAudioOptions</a></span>
+                                                        <span class="type"><a href="../classes/LTSeq.html" class="crosslink">LTSeq</a></span>
                                                     </span>
                                             
                                             
@@ -234,7 +254,7 @@
                                                 <div class="meta">
                                                             <p>
                                                             Defined in
-                                                    <a href="../files/LeanAudio.cs.html#l343"><code>LeanAudio.cs:343</code></a>
+                                                    <a href="../files/LTSeq.cs.html#l131"><code>LTSeq.cs:131</code></a>
                                                     </p>
                                             
                                             
@@ -242,7 +262,7 @@
                                                 </div>
                                             
                                                 <div class="description">
-                                                    <p>Set the frequency for the audio is encoded. 44100 is CD quality, but you can usually get away with much lower (or use a lower amount to get a more 8-bit sound).</p>
+                                                    <p>Add a time delay to the sequence</p>
                                             
                                                 </div>
                                             
@@ -251,12 +271,12 @@
                                             
                                                         <ul class="params-list">
                                                             <li class="param">
-                                                                    <code class="param-name">frequencyRate:int</code>
-                                                                    <span class="type">Int</span>
+                                                                    <code class="param-name">callback:System.Action</code>
+                                                                    <span class="type">System.Action</span>
                                             
                                             
                                                                 <div class="param-description">
-                                                                    <p>of the frequency you wish to encode the AudioClip at</p>
+                                                                    <p>method you want to be called</p>
                                             
                                                                 </div>
                                             
@@ -268,8 +288,8 @@
                                                         <h4>Returns:</h4>
                                             
                                                         <div class="returns-description">
-                                                                    <span class="type"><a href="../classes/LeanAudioOptions.html" class="crosslink">LeanAudioOptions</a></span>:
-                                                                <p>LeanAudioOptions describing optional values</p>
+                                                                    <span class="type"><a href="../classes/LTSeq.html" class="crosslink">LTSeq</a></span>:
+                                                                <p>LTSeq an object that you can add tweens, methods and time on to</p>
                                             
                                                         </div>
                                                     </div>
@@ -278,26 +298,26 @@
                                                         <h4>Example:</h4>
                                             
                                                         <div class="example-content">
-                                                            <p>AnimationCurve volumeCurve = new AnimationCurve( new Keyframe(0f, 1f, 0f, -1f), new Keyframe(1f, 0f, -1f, 0f));<br>
-                                            AnimationCurve frequencyCurve = new AnimationCurve( new Keyframe(0f, 0.003f, 0f, 0f), new Keyframe(1f, 0.003f, 0f, 0f));<br>
-                                            AudioClip audioClip = LeanAudio.createAudio(volumeCurve, frequencyCurve, LeanAudio.options().setVibrato( new Vector3[]{ new Vector3(0.32f,0f,0f)} ).setFrequency(12100) );<br></p>
+                                                            <p>var seq = LeanTween.sequence();<br>
+                                            seq.append( () =&gt; { // fire an event before start<br>
+                                             Debug.Log(&quot;I have started&quot;);<br>
+                                            });<br>
+                                            seq.append( LeanTween.move(cube1, Vector3.one * 10f, 1f) ); // do a tween<br>
+                                            seq.append((object obj) =&gt; { // fire event after tween
+                                             var dict = obj as Dictionary&lt;string,string&gt;;
+                                             Debug.Log(&quot;We are done now obj value:&quot;+dict[&quot;hi&quot;]);
+                                             }, new Dictionary&lt;string,string&gt;(){ {&quot;hi&quot;,&quot;sup&quot;} } );</p>
                                             
                                                         </div>
                                                     </div>
                                             </div>
-                                            <div id="method_setVibrato" class="method item">
-                                                <h3 class="name"><code>setVibrato</code></h3>
+                                            <div id="method_add (tween)" class="method item">
+                                                <h3 class="name"><code>add (tween)</code></h3>
                                             
-                                                    <div class="args">
-                                                        <span class="paren">(</span><ul class="args-list inline commas">
-                                                            <li class="arg">
-                                                                    <code>vibratoArray:Vector3[]</code>
-                                                            </li>
-                                                        </ul><span class="paren">)</span>
-                                                    </div>
+                                                    <span class="paren">()</span>
                                             
                                                     <span class="returns-inline">
-                                                        <span class="type"><a href="../classes/LeanAudioOptions.html" class="crosslink">LeanAudioOptions</a></span>
+                                                        <span class="type"><a href="../classes/LTSeq.html" class="crosslink">LTSeq</a></span>
                                                     </span>
                                             
                                             
@@ -309,7 +329,7 @@
                                                 <div class="meta">
                                                             <p>
                                                             Defined in
-                                                    <a href="../files/LeanAudio.cs.html#l359"><code>LeanAudio.cs:359</code></a>
+                                                    <a href="../files/LTSeq.cs.html#l165"><code>LTSeq.cs:165</code></a>
                                                     </p>
                                             
                                             
@@ -317,7 +337,65 @@
                                                 </div>
                                             
                                                 <div class="description">
-                                                    <p>Set details about the shape of the curve by adding vibrato modulations through it (alters the peak values giving it a wah-wah effect). You can add as many as you want to sculpt out more detail in the sound wave.</p>
+                                                    <p>Retrieve a sequencer object where you can easily chain together tweens and methods one after another</p>
+                                            
+                                                </div>
+                                            
+                                            
+                                                    <div class="returns">
+                                                        <h4>Returns:</h4>
+                                            
+                                                        <div class="returns-description">
+                                                                    <span class="type"><a href="../classes/LTSeq.html" class="crosslink">LTSeq</a></span>:
+                                                                <p>LTSeq an object that you can add tweens, methods and time on to</p>
+                                            
+                                                        </div>
+                                                    </div>
+                                            
+                                                    <div class="example">
+                                                        <h4>Example:</h4>
+                                            
+                                                        <div class="example-content">
+                                                            <p>var seq = LeanTween.sequence();<br>
+                                            seq.append( LeanTween.move(cube1, Vector3.one * 10f, 1f) ); // do a move tween<br>
+                                            seq.append( LeanTween.rotateAround( avatar1, Vector3.forward, 360f, 1f ) ); // then do a rotate tween<br></p>
+                                            
+                                                        </div>
+                                                    </div>
+                                            </div>
+                                            <div id="method_append (delay)" class="method item">
+                                                <h3 class="name"><code>append (delay)</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>delay:float</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                                    <span class="returns-inline">
+                                                        <span class="type"><a href="../classes/LTSeq.html" class="crosslink">LTSeq</a></span>
+                                                    </span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/LTSeq.cs.html#l93"><code>LTSeq.cs:93</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Add a time delay to the sequence</p>
                                             
                                                 </div>
                                             
@@ -326,12 +404,12 @@
                                             
                                                         <ul class="params-list">
                                                             <li class="param">
-                                                                    <code class="param-name">vibratoArray:Vector3[]</code>
-                                                                    <span class="type">Vector3</span>
+                                                                    <code class="param-name">delay:float</code>
+                                                                    <span class="type">Float</span>
                                             
                                             
                                                                 <div class="param-description">
-                                                                    <p>The first value is the period in seconds that you wish to have the vibrato wave fluctuate at. The second value is the minimum height you wish the vibrato wave to dip down to (default is zero). The third is reserved for future effects.</p>
+                                                                    <p>amount of time to add to the sequence</p>
                                             
                                                                 </div>
                                             
@@ -343,8 +421,76 @@
                                                         <h4>Returns:</h4>
                                             
                                                         <div class="returns-description">
-                                                                    <span class="type"><a href="../classes/LeanAudioOptions.html" class="crosslink">LeanAudioOptions</a></span>:
-                                                                <p>LeanAudioOptions describing optional values</p>
+                                                                    <span class="type"><a href="../classes/LTSeq.html" class="crosslink">LTSeq</a></span>:
+                                                                <p>LTDescr an object that distinguishes the tween
+                                            var seq = LeanTween.sequence();<br>
+                                            seq.append(1f); // delay everything one second<br>
+                                            seq.append( LeanTween.move(cube1, Vector3.one * 10f, 1f) ); // do a tween<br></p>
+                                            
+                                                        </div>
+                                                    </div>
+                                            
+                                            </div>
+                                            <div id="method_append (method)" class="method item">
+                                                <h3 class="name"><code>append (method)</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>callback:System.Action</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                                    <span class="returns-inline">
+                                                        <span class="type"><a href="../classes/LTSeq.html" class="crosslink">LTSeq</a></span>
+                                                    </span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/LTSeq.cs.html#l108"><code>LTSeq.cs:108</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Add a time delay to the sequence</p>
+                                            
+                                                </div>
+                                            
+                                                    <div class="params">
+                                                        <h4>Parameters:</h4>
+                                            
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name">callback:System.Action</code>
+                                                                    <span class="type">System.Action</span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                    <p>method you want to be called</p>
+                                            
+                                                                </div>
+                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            
+                                                    <div class="returns">
+                                                        <h4>Returns:</h4>
+                                            
+                                                        <div class="returns-description">
+                                                                    <span class="type"><a href="../classes/LTSeq.html" class="crosslink">LTSeq</a></span>:
+                                                                <p>LTSeq an object that you can add tweens, methods and time on to</p>
                                             
                                                         </div>
                                                     </div>
@@ -353,9 +499,14 @@
                                                         <h4>Example:</h4>
                                             
                                                         <div class="example-content">
-                                                            <p>AnimationCurve volumeCurve = new AnimationCurve( new Keyframe(0f, 1f, 0f, -1f), new Keyframe(1f, 0f, -1f, 0f));<br>
-                                            AnimationCurve frequencyCurve = new AnimationCurve( new Keyframe(0f, 0.003f, 0f, 0f), new Keyframe(1f, 0.003f, 0f, 0f));<br>
-                                            AudioClip audioClip = LeanAudio.createAudio(volumeCurve, frequencyCurve, LeanAudio.options().setVibrato( new Vector3[]{ new Vector3(0.32f,0.3f,0f)} ).setFrequency(12100) );<br></p>
+                                                            <p>var seq = LeanTween.sequence();<br>
+                                            seq.append( () =&gt; { // fire an event before start<br>
+                                             Debug.Log(&quot;I have started&quot;);<br>
+                                            });<br>
+                                            seq.append( LeanTween.move(cube1, Vector3.one * 10f, 1f) ); // do a tween<br>
+                                            seq.append( () =&gt; { // fire event after tween<br>
+                                             Debug.Log(&quot;We are done now&quot;);<br>
+                                            });;<br></p>
                                             
                                                         </div>
                                                     </div>
